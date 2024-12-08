@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section id="order-history">
+        <h2>Your Orders</h2>
+        <div id="orders-list"></div>
+      </section>
+      
+      <script>
+      function fetchOrders() {
+        fetch('https://docs.google.com/spreadsheets/d/1xfIaKlyiV6LPnxkmYsWklSAhJrxb744NEaHL6BtLUDc/edit?pli=1&gid=0#gid=0')
+          .then(response => response.json())
+          .then(data => {
+            const orders = data.feed.entry;
+            const ordersList = document.getElementById('orders-list');
+            orders.forEach(order => {
+              ordersList.innerHTML += `<p>Order ID: ${order.gsx$orderid.$t}, Product: ${order.gsx$product.$t}, Quantity: ${order.gsx$quantity.$t}, Payment: ${order.gsx$paymentoption.$t}</p>`;
+            });
+          });
+      }
+      
+      window.onload = fetchOrders;
+      </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
